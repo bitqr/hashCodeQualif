@@ -23,6 +23,10 @@ public final class FileHandler {
 	}
 	
 	public static void writeOutput(String outputFileName, String outputContent) throws IOException {
+		File directory = new File("target");
+		if (outputFileName.contains("target/") && (!directory.exists() || !directory.isDirectory())) {
+			directory.mkdir();
+		}
 		Files.write(Paths.get(outputFileName), outputContent.getBytes());
 	}
 
