@@ -43,6 +43,25 @@ public class ProblemInstance {
 
         return solution;
     }
+    
+   public Solution createEmptySolution() {
+        Solution result = new Solution(this);
+
+        for(int i=0 ; i<rides.size(); i++) {
+
+            Ride r = rides.get(i);
+            
+            if(!result.assignment.containsKey(i%nbVehicles)) {
+                result.assignment.put(i%nbVehicles, new ArrayList<>());
+                result.ridesToVehicles.put(r, i%nbVehicules);
+            }
+
+            result.assignment.get(i%nbVehicles).add(r);
+
+        };
+
+        return result;
+    }
 
     /**Simulated annealing template**/
     public Solution simulatedAnnealing(Solution solution){
