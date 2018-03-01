@@ -8,6 +8,9 @@ import java.util.Random;
 public class ProblemInstance {
 
     List<Ride> rides = new ArrayList<>();
+    int nbSteps;
+    int nbVehicles;
+    int nbRides;
 
 
     public ProblemInstance(String fileName){

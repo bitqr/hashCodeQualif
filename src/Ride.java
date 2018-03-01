@@ -10,5 +10,8 @@ public class Ride {
     int earliestStart;
     int latestEnd;
 
+    int getLength(){
+        return Math.abs(startRow-endRow)+Math.abs(startColumn-endColumn);
+    }
 
 }
