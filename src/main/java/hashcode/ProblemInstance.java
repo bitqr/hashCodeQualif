@@ -1,7 +1,7 @@
 package hashcode;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.Random;
 
 /**
@@ -10,6 +10,8 @@ import java.util.Random;
 public class ProblemInstance {
 
     List<hashcode.Ride> rides = new ArrayList<>();
+    public Map<Ride, TreeSet<RideMetric>> rideMetrics = new HashMap<>();
+    
     int nbSteps;
     int nbVehicles;
     int nbRides;
@@ -42,6 +44,25 @@ public class ProblemInstance {
         hashcode.Solution solution = new hashcode.Solution(this);
 
         return solution;
+    }
+    
+   public Solution createEmptySolution() {
+        Solution result = new Solution(this);
+
+        for(int i=0 ; i<rides.size(); i++) {
+
+            Ride r = rides.get(i);
+            
+            if(!result.assignment.containsKey(i%nbVehicles)) {
+                result.assignment.put(i%nbVehicles, new ArrayList<>());
+                result.ridesToVehicles.put(r, i%nbVehicles);
+            }
+
+            result.assignment.get(i%nbVehicles).add(r);
+
+        };
+
+        return result;
     }
 
     /**Simulated annealing template**/
