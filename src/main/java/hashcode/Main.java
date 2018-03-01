@@ -10,10 +10,10 @@ public class Main {
         System.out.println("Hash code -- Qualification Round 2018");
         List<String> fileNames = new ArrayList<String>();
         //fileNames.add("a_example.in");
-        //fileNames.add("b_should_be_easy.in");
-        //fileNames.add("c_no_hurry.in");
-        //fileNames.add("d_metropolis.in");
-        fileNames.add("e_high_bonus.in");
+        fileNames.add("b_should_be_easy.in");
+        fileNames.add("c_no_hurry.in");
+        fileNames.add("d_metropolis.in");
+        //fileNames.add("e_high_bonus.in");
         for(String fileName : fileNames) {
             InputStructure inputStructure = new InputStructure(fileName);
             System.out.println(inputStructure);

@@ -66,11 +66,12 @@ public class Solution {
     public double evaluate(){
         double value=0.0;
         for(Integer vehicle : assignment.keySet()){
+            //For each vehicle
             int currentStep=0;
             int currentRow=0;
             int currentColumn=0;
-            if(currentStep<=instance.nbSteps){
-                for(Ride ride : assignment.get(vehicle)){
+            for(Ride ride : assignment.get(vehicle)){
+                if(currentStep<=instance.nbSteps){
                     boolean bonusOrNot = currentStep+distance(currentRow,currentColumn,ride.startRow,ride.startColumn)<=ride.earliestStart;
                     currentStep+=Math.max(ride.earliestStart,
                             distance(currentRow,currentColumn,ride.startRow,ride.startColumn)) +
