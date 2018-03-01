@@ -53,10 +53,10 @@ public class ProblemInstance {
             
             if(!result.assignment.containsKey(i%nbVehicles)) {
                 result.assignment.put(i%nbVehicles, new ArrayList<>());
-                result.ridesToVehicles.put(r, i%nbVehicules);
             }
 
             result.assignment.get(i%nbVehicles).add(r);
+            result.ridesToVehicles.put(r, i%nbVehicles);
 
         };
 
@@ -67,9 +67,9 @@ public class ProblemInstance {
     public Solution simulatedAnnealing(Solution solution){
 
         //Parameters
-        int restartLimit=52000;
+        int restartLimit=1;
         //restartLimit=(int)maxIter;
-        int numberOfRestarts=10;
+        int numberOfRestarts=1;
         double t0=10;
         double t=t0;
         double coeff=0.99;
@@ -97,9 +97,9 @@ public class ProblemInstance {
 
             if(restartCounter<restartLimit){
                 //Do some neighbourhood
-                Ride rideToReallocate = rides.get(rn.nextInt()%nbRides);
-                int vehicleToReallocate = rn.nextInt()%nbVehicles;
-                int positionToReallocate = rn.nextInt()%newSolution.assignment.get(vehicleToReallocate).size();
+                Ride rideToReallocate = rides.get(Math.abs(rn.nextInt())%nbRides);
+                int vehicleToReallocate = Math.abs(rn.nextInt())%nbVehicles;
+                int positionToReallocate = Math.abs(rn.nextInt())%newSolution.assignment.get(vehicleToReallocate).size();
                 newSolution.neighbour(rideToReallocate,vehicleToReallocate,positionToReallocate);
             }
             else{//Restart please
