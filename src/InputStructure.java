@@ -30,7 +30,7 @@ public class InputStructure {
 	public List<Entity2> entities2;
 	
 	public InputStructure() throws IOException {
-		FileHandler.parseInput("src/input.in");
+		FileHandler.parseInput("src/resources/input.in");
 		int lineOffset = 0;
 		int lineIndex = 0;
 		
