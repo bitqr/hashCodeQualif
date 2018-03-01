@@ -1,9 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
  * Created by Abdel on 01/03/2018.
  */
 public class ProblemInstance {
+
+    List<Ride> rides = new ArrayList<>();
+
 
     public ProblemInstance(String fileName){
 

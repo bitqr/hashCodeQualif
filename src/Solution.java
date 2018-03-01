@@ -1,7 +1,13 @@
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Abdel on 01/03/2018.
  */
 public class Solution {
+
+    Map<Integer, List<Integer>> assignment = new HashMap<>();
 
     ProblemInstance instance;
 
@@ -11,6 +17,7 @@ public class Solution {
 
     public String toString(){
         StringBuilder str = new StringBuilder();
+
         return str.toString();
     }
 
