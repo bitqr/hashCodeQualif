@@ -10,8 +10,8 @@ import java.util.Map;
  */
 public class Solution {
 
-    Map<Integer, List<Ride>> assignment = new HashMap<>();
-    Map<Ride, Integer> ridesToVehicles = new HashMap<>();
+    public Map<Integer, List<Ride>> assignment = new HashMap<>();
+    public Map<Ride, Integer> ridesToVehicles = new HashMap<>();
 
     ProblemInstance instance;
 
