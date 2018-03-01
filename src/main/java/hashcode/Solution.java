@@ -12,7 +12,8 @@ public class Solution {
 
     public Map<Integer, List<Ride>> assignment = new HashMap<>();
     public Map<Ride, Integer> ridesToVehicles = new HashMap<>();
-
+    public Map<Ride, TreeSet<RideMetric>> rideMetrics = new HashMap<>();
+    
     ProblemInstance instance;
 
     public Solution(ProblemInstance instance){
