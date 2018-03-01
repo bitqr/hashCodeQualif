@@ -7,9 +7,10 @@ public class Main {
 
         System.out.println("Hash code -- Qualification Round 2018");
         String fileName = "a_example.in";
-        System.out.println(new InputStructure(fileName));
+        InputStructure inputStructure = new InputStructure(fileName);
+        System.out.println(inputStructure);
         //run optim here
-        ProblemInstance pI = new ProblemInstance("src/resources/input.in");
+        ProblemInstance pI = new ProblemInstance(inputStructure);
         String solution = pI.solve().toString();
         FileHandler.writeOutput("target/output.txt", solution);
 
