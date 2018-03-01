@@ -17,7 +17,8 @@ public class Solution {
         this.instance = instance;
     }
 
-    public Solution(String fileName, List<Ride> rides) throws IOException {
+    public Solution(String fileName, ProblemInstance instance) throws IOException {
+        this(instance);
         FileHandler.parseInput(fileName);
         int nbVeh = FileHandler.inputFileLines.size();
         for (int v = 0; v < nbVeh; v++) {
@@ -25,9 +26,9 @@ public class Solution {
             for (int r = 0; r < nbRides; r++) {
                 int rideId = FileHandler.getIntAt(v, r + 1);
                 Ride ride = null;
-                for (int i = 0; i < rides.size(); i++)
-                    if (rides.get(i).id == rideId) {
-                        ride = rides.get(i);
+                for (int i = 0; i < instance.rides.size(); i++)
+                    if (instance.rides.get(i).id == rideId) {
+                        ride = instance.rides.get(i);
                         break;
                     }
                 List<Ride> vrides = assignment.get(v);
@@ -70,7 +71,7 @@ public class Solution {
             int currentColumn=0;
             if(currentStep<=instance.nbSteps){
                 for(Ride ride : assignment.get(vehicle)){
-                    int startOfTrip=currentStep;
+                    boolean bonusOrNot = currentStep+distance(currentRow,currentColumn,ride.startRow,ride.startColumn)<=ride.earliestStart;
                     currentStep+=Math.max(ride.earliestStart,
                             distance(currentRow,currentColumn,ride.startRow,ride.startColumn)) +
                     ride.getLength();
@@ -78,7 +79,7 @@ public class Solution {
                     currentColumn = ride.endColumn;
                     if(currentStep<ride.latestEnd){
                         value+=ride.getLength();
-                        if(startOfTrip==ride.earliestStart)
+                        if(bonusOrNot)
                             value+=instance.bonus;
                     }
                 }

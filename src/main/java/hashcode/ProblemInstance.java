@@ -88,7 +88,7 @@ public class ProblemInstance {
 
         //Parameters
         //restartLimit=(int)maxIter;
-        int nbIter=100000;
+        int nbIter=10000;
         double t0=10;
         double t=t0;
         double coeff=0.99;
