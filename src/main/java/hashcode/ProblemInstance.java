@@ -53,7 +53,7 @@ public class ProblemInstance {
             
             if(!result.assignment.containsKey(i%nbVehicles)) {
                 result.assignment.put(i%nbVehicles, new ArrayList<>());
-                result.ridesToVehicles.put(r, i%nbVehicules);
+                result.ridesToVehicles.put(r, i%nbVehicles);
             }
 
             result.assignment.get(i%nbVehicles).add(r);
