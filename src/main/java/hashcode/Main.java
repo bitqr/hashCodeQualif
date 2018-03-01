@@ -19,5 +19,6 @@ public class Main {
         Solution simulatedSolution = pI.simulatedAnnealing(initialSolution);
         //String solution = pI.solve().toString();
         FileHandler.writeOutput("target/"+fileName+"_output", simulatedSolution.toString());
+        FileHandler.writeZip();
     }
 }
