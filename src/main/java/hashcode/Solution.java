@@ -23,7 +23,7 @@ public class Solution {
         for (int vehicle: assignment.keySet()) {
             str.append(vehicle);
             for (Ride ride: assignment.get(vehicle))
-                str.append(' ').append(ride.id);
+                str.append(' ').append(ride.id).append('\n');
         }
         return str.toString();
     }
