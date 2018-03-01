@@ -49,12 +49,14 @@ public class ProblemInstance {
 
         for(int i=0 ; i<rides.size(); i++) {
 
-
+            Ride r = rides.get(i);
+            
             if(!result.assignment.containsKey(i%nbVehicles)) {
                 result.assignment.put(i%nbVehicles, new ArrayList<>());
+                result.ridesToVehicles.put(r, i%nbVehicules);
             }
 
-            result.assignment.get(i%nbVehicles).add(rides.get(i));
+            result.assignment.get(i%nbVehicles).add(r);
 
         };
 
