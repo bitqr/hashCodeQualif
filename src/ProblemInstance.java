@@ -11,7 +11,7 @@ public class ProblemInstance {
     int nbSteps;
     int nbVehicles;
     int nbRides;
-
+    int bonus;
 
     public ProblemInstance(String fileName){
 
@@ -46,19 +46,20 @@ public class ProblemInstance {
         double currentScore = solution.evaluate();
         double bestScore=currentScore;
         Solution bestSolution = new Solution(this);
-        //bestSolution.copy(solution);
+        bestSolution.copy(solution);
 
         while(!stopCriterion){
 
             boolean restarted=false;
             //Copy solution and test improvement
             Solution newSolution = new Solution(this);
-            //newSolution.copy(solution);
+            newSolution.copy(solution);
             Random rn = new Random();
 
             if(restartCounter<restartLimit){
                 //Do some neighbourhood
-                //TODO
+
+
             }
             else{//Restart please
                 System.out.println("Restart #"+numberOfRestartsCounter);
