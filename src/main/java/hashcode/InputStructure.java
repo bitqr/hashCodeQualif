@@ -1,3 +1,5 @@
+package hashcode;
+
 
 
 import java.io.IOException;
