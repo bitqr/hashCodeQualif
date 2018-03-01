@@ -11,8 +11,6 @@ import java.util.Map;
 //To be changed according to the input.in structure description
 public class InputStructure {
 	
-	
-	
 	public Map<String,Integer> inputDefinitions = new HashMap<String, Integer>();
 	public List<RideInput> rides = new ArrayList<RideInput>();
 	

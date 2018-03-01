@@ -14,9 +14,28 @@ public class ProblemInstance {
     int nbVehicles;
     int nbRides;
     int bonus;
+    int nbRows;
+    int nbColumns;
 
-    public ProblemInstance(String fileName){
-
+    public ProblemInstance(InputStructure inputStructure){
+        nbSteps = inputStructure.inputDefinitions.get("steps");
+        nbVehicles = inputStructure.inputDefinitions.get("vehicles");
+        nbRides = inputStructure.inputDefinitions.get("rides");
+        nbColumns = inputStructure.inputDefinitions.get("columns");
+        bonus = inputStructure.inputDefinitions.get("bonus");
+        nbRows = inputStructure.inputDefinitions.get("rows");
+        int id=0;
+        for(InputStructure.RideInput rideInput : inputStructure.rides){
+            Ride ride = new Ride();
+            ride.earliestStart = rideInput.earliestStart;
+            ride.startColumn = rideInput.startPosition.column;
+            ride.endColumn = rideInput.finishPosition.column;
+            ride.startRow = rideInput.startPosition.row;
+            ride.endRow = rideInput.finishPosition.row;
+            ride.id=id;
+            id++;
+            rides.add(ride);
+        }
     }
 
     public hashcode.Solution solve(){
