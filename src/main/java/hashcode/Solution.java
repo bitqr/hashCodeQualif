@@ -36,7 +36,7 @@ public class Solution {
 
     }
 
-    int distance(int startRow, int startColumn, int endRow, int endColumn){
+    static int distance(int startRow, int startColumn, int endRow, int endColumn){
         return Math.abs(startRow-endRow)+Math.abs(startColumn-endColumn);
     }
 
