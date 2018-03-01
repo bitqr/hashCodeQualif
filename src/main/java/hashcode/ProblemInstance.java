@@ -82,9 +82,8 @@ public class ProblemInstance {
     public Solution simulatedAnnealing(Solution solution){
 
         //Parameters
-        int restartLimit=1;
         //restartLimit=(int)maxIter;
-        int numberOfRestarts=1;
+        int nbIter=100000;
         double t0=10;
         double t=t0;
         double coeff=0.99;
@@ -92,8 +91,6 @@ public class ProblemInstance {
         boolean stopCriterion=false;
 
         //Counters
-        int restartCounter=0;
-        int numberOfRestartsCounter=0;
         int iteration=0;
 
         //Best solution
@@ -104,63 +101,41 @@ public class ProblemInstance {
 
         while(!stopCriterion){
 
-            boolean restarted=false;
             //Copy solution and test improvement
             Solution newSolution = new Solution(this);
             newSolution.copy(solution);
             Random rn = new Random();
 
-            if(restartCounter<restartLimit){
-                //Do some neighbourhood
-                Ride rideToReallocate = rides.get(Math.abs(rn.nextInt())%nbRides);
-                int vehicleToReallocate = Math.abs(rn.nextInt())%nbVehicles;
-                int positionToReallocate = Math.abs(rn.nextInt())%newSolution.assignment.get(vehicleToReallocate).size();
-                newSolution.neighbour(rideToReallocate,vehicleToReallocate,positionToReallocate);
-            }
-            else{//Restart please
-                System.out.println("Restart #"+numberOfRestartsCounter);
-                System.out.println("----------------------------------------------------------------------------");
-                System.out.println("----------------------------------------------------------------------------");
-                restartCounter=0;
-                numberOfRestartsCounter++;
-                t=t0*0.9;
-                //Do the restart here
-                //TODO
-                restarted=true;
-            }
-
+            //Do some neighbourhood
+            Ride rideToReallocate = rides.get(Math.abs(rn.nextInt())%nbRides);
+            int vehicleToReallocate = Math.abs(rn.nextInt())%nbVehicles;
+            int positionToReallocate = Math.abs(rn.nextInt())%newSolution.assignment.get(vehicleToReallocate).size();
+            newSolution.neighbour(rideToReallocate,vehicleToReallocate,positionToReallocate);
             double newScore = newSolution.evaluate();
 
             //Update current
             double delta = newScore-currentScore;
             double acceptanceProbability = Math.exp(-delta/t);
-            if(restarted || delta<0 || (delta>0 && rn.nextDouble()<acceptanceProbability)){
+            if(delta>0 || (delta<0 && rn.nextDouble()<acceptanceProbability)){
                 //Accept solution please
                 currentScore=newScore;
                 solution.copy(newSolution);
-                restartCounter=0;
-            }
-            else{
-                //Not accepted.
-                restartCounter++;
             }
             //Update best
-            if(newScore<bestScore){
+            if(newScore>bestScore){
                 bestScore=newScore;
                 bestSolution.copy(newSolution);
                 System.out.println("Best updated: "+bestScore);
-                restartCounter=0;
             }
 
             t=t*coeff;
 
             if(iteration%displayFreq==0){
                 System.out.println("Current Score: "+currentScore + "(Best="+bestScore+")"+"\t (T="+t+")");
-                System.out.println("Restart="+restartCounter);
              }
 
             //Stop criterion
-            if(numberOfRestartsCounter>=numberOfRestarts)
+            if(iteration>=nbIter)
                 stopCriterion=true;
 
             iteration++;
