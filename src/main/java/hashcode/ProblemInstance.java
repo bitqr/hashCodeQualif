@@ -11,7 +11,7 @@ public class ProblemInstance {
 
     List<hashcode.Ride> rides = new ArrayList<>();
     public Map<Ride, TreeSet<RideMetric>> rideMetrics = new HashMap<>();
-
+    
     int nbSteps;
     int nbVehicles;
     int nbRides;
@@ -45,7 +45,9 @@ public class ProblemInstance {
         // Compute all metrics
         rides.forEach(r1 -> {
             rides.forEach( r2-> {
-                rideMetrics.get(r1).add(new RideMetric(r2, r2.getLength() / Solution.distance(r1.endRow, r1.endColumn, r2.startRow, r2.startColumn)));
+                 if(r1!=r2) {
+                    rideMetrics.get(r1).add(new RideMetric(r2, r2.getLength() / Solution.distance(r1.endRow, r1.endColumn, r2.startRow, r2.startColumn)));
+                }
             });
         });
     }
@@ -65,10 +67,10 @@ public class ProblemInstance {
             
             if(!result.assignment.containsKey(i%nbVehicles)) {
                 result.assignment.put(i%nbVehicles, new ArrayList<>());
+                result.ridesToVehicles.put(r, i%nbVehicles);
             }
 
             result.assignment.get(i%nbVehicles).add(r);
-            result.ridesToVehicles.put(r, i%nbVehicles);
 
         };
 
@@ -79,9 +81,9 @@ public class ProblemInstance {
     public Solution simulatedAnnealing(Solution solution){
 
         //Parameters
-        int restartLimit=1;
+        int restartLimit=52000;
         //restartLimit=(int)maxIter;
-        int numberOfRestarts=1;
+        int numberOfRestarts=10;
         double t0=10;
         double t=t0;
         double coeff=0.99;
@@ -109,9 +111,9 @@ public class ProblemInstance {
 
             if(restartCounter<restartLimit){
                 //Do some neighbourhood
-                Ride rideToReallocate = rides.get(Math.abs(rn.nextInt())%nbRides);
-                int vehicleToReallocate = Math.abs(rn.nextInt())%nbVehicles;
-                int positionToReallocate = Math.abs(rn.nextInt())%newSolution.assignment.get(vehicleToReallocate).size();
+                Ride rideToReallocate = rides.get(rn.nextInt()%nbRides);
+                int vehicleToReallocate = rn.nextInt()%nbVehicles;
+                int positionToReallocate = rn.nextInt()%newSolution.assignment.get(vehicleToReallocate).size();
                 newSolution.neighbour(rideToReallocate,vehicleToReallocate,positionToReallocate);
             }
             else{//Restart please
