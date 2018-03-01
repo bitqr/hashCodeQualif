@@ -1,7 +1,7 @@
 package hashcode;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.Random;
 
 /**
@@ -10,6 +10,8 @@ import java.util.Random;
 public class ProblemInstance {
 
     List<hashcode.Ride> rides = new ArrayList<>();
+    public Map<Ride, TreeSet<RideMetric>> rideMetrics = new HashMap<>();
+    
     int nbSteps;
     int nbVehicles;
     int nbRides;
