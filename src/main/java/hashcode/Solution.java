@@ -21,8 +21,9 @@ public class Solution {
         StringBuilder str = new StringBuilder();
         str.append(assignment.size()).append('\n');
         for (int vehicle: assignment.keySet()) {
-            str.append(vehicle);
-            for (Ride ride: assignment.get(vehicle))
+            List<Ride> rides = assignment.get(vehicle);
+            str.append(rides.size());
+            for (Ride ride: rides)
                 str.append(' ').append(ride.id);
             str.append('\n');
         }
