@@ -19,7 +19,6 @@ public class Solution {
 
     public String toString(){
         StringBuilder str = new StringBuilder();
-        str.append(assignment.size()).append('\n');
         for (int vehicle: assignment.keySet()) {
             List<Ride> rides = assignment.get(vehicle);
             str.append(rides.size());
