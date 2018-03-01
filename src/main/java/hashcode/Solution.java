@@ -1,7 +1,5 @@
 package hashcode;
 
-import com.sun.java.util.jar.pack.Package;
-
 import java.io.IOException;
 import java.util.*;
 

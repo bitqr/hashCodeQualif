@@ -30,6 +30,7 @@ public class ProblemInstance {
         for(InputStructure.RideInput rideInput : inputStructure.rides){
             Ride ride = new Ride();
             ride.earliestStart = rideInput.earliestStart;
+            ride.latestEnd = rideInput.latestFinish;
             ride.startColumn = rideInput.startPosition.column;
             ride.endColumn = rideInput.finishPosition.column;
             ride.startRow = rideInput.startPosition.row;
@@ -113,13 +114,15 @@ public class ProblemInstance {
             //Do some neighbourhood
             Ride rideToReallocate = rides.get(Math.abs(rn.nextInt())%nbRides);
             int vehicleToReallocate = Math.abs(rn.nextInt())%nbVehicles;
-            int positionToReallocate = Math.abs(rn.nextInt())%newSolution.assignment.get(vehicleToReallocate).size();
+            int positionToReallocate = 0;
+            if(!newSolution.assignment.get(vehicleToReallocate).isEmpty())
+                positionToReallocate = Math.abs(rn.nextInt())%newSolution.assignment.get(vehicleToReallocate).size();
             newSolution.neighbour(rideToReallocate,vehicleToReallocate,positionToReallocate);
             double newScore = newSolution.evaluate();
 
             //Update current
             double delta = newScore-currentScore;
-            double acceptanceProbability = Math.exp(-delta/t);
+            double acceptanceProbability = Math.exp(delta/t);
             if(delta>0 || (delta<0 && rn.nextDouble()<acceptanceProbability)){
                 //Accept solution please
                 currentScore=newScore;
