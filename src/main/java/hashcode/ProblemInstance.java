@@ -46,7 +46,8 @@ public class ProblemInstance {
         rides.forEach(r1 -> {
             rides.forEach( r2-> {
                  if(r1!=r2) {
-                    rideMetrics.get(r1).add(new RideMetric(r2, r2.getLength() / Solution.distance(r1.endRow, r1.endColumn, r2.startRow, r2.startColumn)));
+                     int distance = Solution.distance(r1.endRow, r1.endColumn, r2.startRow, r2.startColumn);
+                    rideMetrics.get(r1).add(new RideMetric(r2, distance!=0 ? r2.getLength() / distance : r2.getLength()));
                 }
             });
         });
