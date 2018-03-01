@@ -62,7 +62,6 @@ public class ProblemInstance {
     
    public Solution createEmptySolution() {
         Solution result = new Solution(this);
-
                
         // Sort rides by earliest start time for first assignation
         rides.sort(Comparator.comparingInt(o -> o.earliestStart));
@@ -79,6 +78,10 @@ public class ProblemInstance {
             result.ridesToVehicles.put(r, i%nbVehicles);
 
         };
+
+        //for (int i=0; i< nbVehicles; i++) {
+
+        //}
 
         return result;
     }

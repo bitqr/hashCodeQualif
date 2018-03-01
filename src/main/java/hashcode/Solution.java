@@ -86,7 +86,35 @@ public class Solution {
                 }
             }
         }
+/*
+        if (value != evaluate2()) {
+            String msg = value + " != " + evaluate2();
+            System.err.println(msg);
+//            throw new IllegalStateException(msg);
+        }
+*/
         return value;
+    }
+
+    public double evaluate2() {
+        double score = 0.0d;
+        for (int vehicle : assignment.keySet()) {
+            int row = 0, col = 0, time = 0;
+            for (Ride ride: assignment.get(vehicle)) {
+                int distanceToRide = distance(row, col, ride.startRow, ride.startColumn);
+                int rideStartTime = Math.max(time + distanceToRide, ride.earliestStart);
+                int rideLength = distance(ride.startRow, ride.startColumn, ride.endRow, ride.endColumn);
+                int rideEndTime = rideStartTime + rideLength;
+                if (rideEndTime < instance.nbSteps && rideEndTime < ride.latestEnd) {
+                    score += rideLength;
+                    if (rideStartTime == ride.earliestStart) score += instance.bonus;
+                }
+                time = rideEndTime;
+                row = ride.endRow;
+                col = ride.endColumn;
+            }
+        }
+        return score;
     }
 
     public void copy(Solution other){

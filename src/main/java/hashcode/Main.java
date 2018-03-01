@@ -24,8 +24,8 @@ public class Main {
             Solution simulatedSolution = pI.simulatedAnnealing(initialSolution);
             //String solution = pI.solve().toString();
             FileHandler.writeOutput("target/"+fileName+"_output", simulatedSolution.toString());
-            // if (simulatedSolution.toString().equals(new Solution("target/"+fileName+"_output", pI.rides).toString()))
-            //    throw new IllegalStateException(simulatedSolution.toString() + '\n' + new Solution("target/"+fileName+"_output", pI.rides).toString());
+            // if (simulatedSolution.toString().equals(new Solution("target/"+fileName+"_output", pI).toString()))
+            //    throw new IllegalStateException(simulatedSolution.toString() + '\n' + new Solution("target/"+fileName+"_output", pI).toString());
 
         }
         FileHandler.writeZip();
