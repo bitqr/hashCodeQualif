@@ -6,7 +6,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         System.out.println("Hash code -- Qualification Round 2018");
-        System.out.println(new InputStructure());
+        String fileName = "a_example.in";
+        System.out.println(new InputStructure(fileName));
         //run optim here
         ProblemInstance pI = new ProblemInstance("src/resources/input.in");
         String solution = pI.solve().toString();
