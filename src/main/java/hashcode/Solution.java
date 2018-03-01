@@ -1,5 +1,8 @@
 package hashcode;
 
+import com.sun.java.util.jar.pack.Package;
+
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -9,17 +12,36 @@ public class Solution {
 
     public Map<Integer, List<Ride>> assignment = new TreeMap<>();
     public Map<Ride, Integer> ridesToVehicles = new HashMap<>();
-    public Map<Ride, TreeSet<RideMetric>> rideMetrics = new HashMap<>();
-    
+
     ProblemInstance instance;
 
     public Solution(ProblemInstance instance){
         this.instance = instance;
     }
 
+    public Solution(String fileName, List<Ride> rides) throws IOException {
+        FileHandler.parseInput(fileName);
+        int nbVeh = FileHandler.inputFileLines.size();
+        for (int v = 0; v < nbVeh; v++) {
+            int nbRides = FileHandler.getIntAt(v + 1, 0);
+            for (int r = 0; r < nbRides; r++) {
+                int rideId = FileHandler.getIntAt(v + 1, r + 1);
+                Ride ride = null;
+                for (int i = 0; i < rides.size(); i++)
+                    if (rides.get(i).id == rideId) {
+                        ride = rides.get(i);
+                        break;
+                    }
+                List<Ride> vrides = assignment.get(v);
+                if (vrides == null) assignment.put(v, vrides = new ArrayList<Ride>());
+                vrides.add(ride);
+                ridesToVehicles.put(ride, v);
+            }
+        }
+    }
+
     public String toString(){
         StringBuilder str = new StringBuilder();
-        str.append(assignment.size()).append('\n');
         for (int vehicle: assignment.keySet()) {
             List<Ride> rides = assignment.get(vehicle);
             str.append(rides.size());
