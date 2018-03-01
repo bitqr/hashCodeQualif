@@ -62,12 +62,23 @@ public class Solution {
     }
 
     public void copy(Solution other){
-        for(Integer vehicle : assignment.keySet()){
+        for(Integer vehicle : other.assignment.keySet()){
             this.assignment.put(vehicle,new ArrayList<>());
             for(Ride ride : other.assignment.get(vehicle)){
                 this.assignment.get(vehicle).add(ride);
+                this.ridesToVehicles.put(ride,vehicle);
             }
         }
+    }
+
+    public void neighbour(Ride ride, int vehicle, int position){
+        int currentVehicle = ridesToVehicles.get(ride);
+        //Remove ride from current vehicle
+        assignment.get(currentVehicle).remove(ride);
+        //Assign it to the new one
+        ridesToVehicles.put(ride,vehicle);
+        //At the right position
+        assignment.get(vehicle).add(position,ride);
     }
 
 }

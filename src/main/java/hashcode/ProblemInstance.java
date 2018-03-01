@@ -78,10 +78,10 @@ public class ProblemInstance {
 
             if(restartCounter<restartLimit){
                 //Do some neighbourhood
-                int rideToReallocate = rn.nextInt()%nbVehicles;
-
-                //newSolution.neighbour();
-
+                Ride rideToReallocate = rides.get(rn.nextInt()%nbRides);
+                int vehicleToReallocate = rn.nextInt()%nbVehicles;
+                int positionToReallocate = rn.nextInt()%newSolution.assignment.get(vehicleToReallocate).size();
+                newSolution.neighbour(rideToReallocate,vehicleToReallocate,positionToReallocate);
             }
             else{//Restart please
                 System.out.println("Restart #"+numberOfRestartsCounter);
