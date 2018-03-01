@@ -41,7 +41,7 @@ public class InputStructure {
 	
 	
 	public InputStructure(String fileName) throws IOException {
-		FileHandler.parseInput("src/resources/"+fileName);
+		FileHandler.parseInput("src/main/resources/"+fileName);
 		int lineOffset = 0;
 		int lineIndex = 0;
 
