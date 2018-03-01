@@ -1,5 +1,4 @@
-package hashcode;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,7 @@ import java.util.Map;
  */
 public class Solution {
 
-    Map<Integer, List<Integer>> assignment = new HashMap<>();
+    Map<Integer, List<Ride>> assignment = new HashMap<>();
 
     ProblemInstance instance;
 
@@ -19,7 +18,6 @@ public class Solution {
 
     public String toString(){
         StringBuilder str = new StringBuilder();
-
         return str.toString();
     }
 
@@ -33,7 +31,20 @@ public class Solution {
 
     public double evaluate(){
         double value=0.0;
+        for(Integer vehicle : assignment.keySet()){
+
+        }
 
         return value;
     }
+
+    public void copy(Solution other){
+        for(Integer vehicle : assignment.keySet()){
+            this.assignment.put(vehicle,new ArrayList<>());
+            for(Ride ride : other.assignment.get(vehicle)){
+                this.assignment.get(vehicle).add(ride);
+            }
+        }
+    }
+
 }
