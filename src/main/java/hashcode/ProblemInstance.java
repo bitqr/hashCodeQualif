@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class ProblemInstance {
 
-    List<Ride> rides = new ArrayList<>();
+    List<hashcode.Ride> rides = new ArrayList<>();
     int nbSteps;
     int nbVehicles;
     int nbRides;
@@ -19,12 +19,11 @@ public class ProblemInstance {
 
     }
 
-    public Solution solve(){
-        Solution solution = new Solution(this);
+    public hashcode.Solution solve(){
+        hashcode.Solution solution = new hashcode.Solution(this);
 
         return solution;
     }
-
 
     /**Simulated annealing template**/
     public Solution simulatedAnnealing(Solution solution){
@@ -60,7 +59,9 @@ public class ProblemInstance {
 
             if(restartCounter<restartLimit){
                 //Do some neighbourhood
+                int rideToReallocate = rn.nextInt()%nbVehicles;
 
+                //newSolution.neighbour();
 
             }
             else{//Restart please
@@ -83,7 +84,7 @@ public class ProblemInstance {
             if(restarted || delta<0 || (delta>0 && rn.nextDouble()<acceptanceProbability)){
                 //Accept solution please
                 currentScore=newScore;
-                //solution.copy(newSolution);
+                solution.copy(newSolution);
                 restartCounter=0;
             }
             else{
@@ -93,7 +94,7 @@ public class ProblemInstance {
             //Update best
             if(newScore<bestScore){
                 bestScore=newScore;
-                //bestSolution.copy(newSolution);
+                bestSolution.copy(newSolution);
                 System.out.println("Best updated: "+bestScore);
                 restartCounter=0;
             }
