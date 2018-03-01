@@ -25,7 +25,7 @@ public final class FileHandler {
 	public static void writeOutput(String outputFileName, String outputContent) throws IOException {
 		Files.write(Paths.get(outputFileName), outputContent.getBytes());
 		
-		File directoryToZip = new File("src");
+		File directoryToZip = new File("src/main/java");
 		List<File> fileList = new ArrayList<File>();
 		getAllFiles(directoryToZip, fileList);
 		writeZipFile(directoryToZip, fileList);

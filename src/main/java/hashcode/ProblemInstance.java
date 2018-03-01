@@ -1,7 +1,7 @@
 package hashcode;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.Random;
 
 /**
@@ -10,6 +10,8 @@ import java.util.Random;
 public class ProblemInstance {
 
     List<hashcode.Ride> rides = new ArrayList<>();
+    public Map<Ride, TreeSet<RideMetric>> rideMetrics = new HashMap<>();
+
     int nbSteps;
     int nbVehicles;
     int nbRides;
@@ -33,9 +35,19 @@ public class ProblemInstance {
             ride.startRow = rideInput.startPosition.row;
             ride.endRow = rideInput.finishPosition.row;
             ride.id=id;
+
+            rideMetrics.put(ride, new TreeSet<>());
+
             id++;
             rides.add(ride);
         }
+
+        // Compute all metrics
+        rides.forEach(r1 -> {
+            rides.forEach( r2-> {
+                rideMetrics.get(r1).add(new RideMetric(r2, r2.getLength() / Solution.distance(r1.endRow, r1.endColumn, r2.startRow, r2.startColumn)));
+            });
+        });
     }
 
     public hashcode.Solution solve(){
