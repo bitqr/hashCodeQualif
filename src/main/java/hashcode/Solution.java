@@ -1,16 +1,13 @@
 package hashcode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Abdel on 01/03/2018.
  */
 public class Solution {
 
-    public Map<Integer, List<Ride>> assignment = new HashMap<>();
+    public Map<Integer, List<Ride>> assignment = new TreeMap<>();
     public Map<Ride, Integer> ridesToVehicles = new HashMap<>();
 
     ProblemInstance instance;
@@ -21,6 +18,12 @@ public class Solution {
 
     public String toString(){
         StringBuilder str = new StringBuilder();
+        str.append(assignment.size()).append('\n');
+        for (int vehicle: assignment.keySet()) {
+            str.append(vehicle);
+            for (Ride ride: assignment.get(vehicle))
+                str.append(' ').append(ride.id);
+        }
         return str.toString();
     }
 
