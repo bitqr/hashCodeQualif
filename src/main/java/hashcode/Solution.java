@@ -1,7 +1,5 @@
 package hashcode;
 
-import com.sun.java.util.jar.pack.Package;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -23,9 +21,9 @@ public class Solution {
         FileHandler.parseInput(fileName);
         int nbVeh = FileHandler.inputFileLines.size();
         for (int v = 0; v < nbVeh; v++) {
-            int nbRides = FileHandler.getIntAt(v + 1, 0);
+            int nbRides = FileHandler.getIntAt(v, 0);
             for (int r = 0; r < nbRides; r++) {
-                int rideId = FileHandler.getIntAt(v + 1, r + 1);
+                int rideId = FileHandler.getIntAt(v, r + 1);
                 Ride ride = null;
                 for (int i = 0; i < rides.size(); i++)
                     if (rides.get(i).id == rideId) {
