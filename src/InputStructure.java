@@ -30,13 +30,13 @@ public class InputStructure {
 	public List<Entity2> entities2;
 	
 	public InputStructure() throws IOException {
-		InputFileParser inputfileParser = new InputFileParser();
+		FileHandler.parseInput("src/input.in");
 		int lineOffset = 0;
 		int lineIndex = 0;
 		
 		//SECTION 1: number of different entities
-		int numberOfEntities1 = inputfileParser.getIntAt(0,0);
-		int numberOfEntities2 = inputfileParser.getIntAt(0,1);
+		int numberOfEntities1 = FileHandler.getIntAt(0,0);
+		int numberOfEntities2 = FileHandler.getIntAt(0,1);
 		entities1 = new ArrayList<Entity1>(numberOfEntities1);
 		entities2 = new ArrayList<Entity2>(numberOfEntities2);
 		
@@ -44,8 +44,8 @@ public class InputStructure {
 		lineOffset = lineIndex + 1;
 		for(lineIndex = 0; lineIndex < numberOfEntities1; lineIndex ++) {
 			Entity1 entity1 = new Entity1();
-			entity1.field1 = inputfileParser.getStringAt(lineOffset + lineIndex, 0);
-			entity1.field2 = inputfileParser.getIntAt(lineOffset + lineIndex, 1);
+			entity1.field1 = FileHandler.getStringAt(lineOffset + lineIndex, 0);
+			entity1.field2 = FileHandler.getIntAt(lineOffset + lineIndex, 1);
 			entities1.add(entity1);
 		}
 		
@@ -53,7 +53,7 @@ public class InputStructure {
 		lineOffset = lineOffset + lineIndex;
 		for(lineIndex = 0; lineIndex < numberOfEntities2; lineIndex ++) {
 			Entity2 entity2 = new Entity2();
-			entity2.field1 = inputfileParser.getDoubleAt(lineOffset + lineIndex, 0);
+			entity2.field1 = FileHandler.getDoubleAt(lineOffset + lineIndex, 0);
 			entities2.add(entity2);
 		}
 				
