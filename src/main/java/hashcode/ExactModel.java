@@ -1,3 +1,5 @@
+package hashcode;
+
 import ilog.concert.*;
 import ilog.cplex.IloCplex;
 

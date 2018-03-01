@@ -1,3 +1,5 @@
+package hashcode;
+
 /**
  * Created by Abdel on 01/03/2018.
  */
