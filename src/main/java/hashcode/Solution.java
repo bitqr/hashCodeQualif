@@ -1,9 +1,6 @@
 package hashcode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Abdel on 01/03/2018.
