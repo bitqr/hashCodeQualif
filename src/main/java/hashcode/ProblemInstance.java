@@ -79,10 +79,6 @@ public class ProblemInstance {
 
         };
 
-        //for (int i=0; i< nbVehicles; i++) {
-
-        //}
-
         return result;
     }
 
@@ -97,12 +93,15 @@ public class ProblemInstance {
         double coeff=0.99;
         int displayFreq=1000;
         boolean stopCriterion=false;
+        int restartLimit=150000;
 
         //Counters
         int iteration=0;
+        int displayIt=0;
+        int restartCounter=0;
 
         //Best solution
-        double currentScore = solution.evaluate();
+        double currentScore = solution.score;
         double bestScore=currentScore;
         Solution bestSolution = new Solution(this);
         bestSolution.copy(solution);
@@ -120,8 +119,13 @@ public class ProblemInstance {
             int positionToReallocate = 0;
             if(!newSolution.assignment.get(vehicleToReallocate).isEmpty())
                 positionToReallocate = Math.abs(rn.nextInt())%newSolution.assignment.get(vehicleToReallocate).size();
+            int vehicleToDischarge = newSolution.ridesToVehicles.get(rideToReallocate);
             newSolution.neighbour(rideToReallocate,vehicleToReallocate,positionToReallocate);
-            double newScore = newSolution.evaluate();
+            newSolution.evaluateVehicleOnly(vehicleToDischarge);
+            newSolution.evaluateVehicleOnly(vehicleToReallocate);
+            double newScore = newSolution.score;
+            //newSolution.neighbour2(rideToReallocate,positionToReallocate);
+            //newSolution.evaluateVehicleOnly(newSolution.ridesToVehicles.get(rideToReallocate));
 
             //Update current
             double delta = newScore-currentScore;
@@ -130,17 +134,23 @@ public class ProblemInstance {
                 //Accept solution please
                 currentScore=newScore;
                 solution.copy(newSolution);
+                iteration=0;
             }
+            else{
+                restartCounter++;
+            }
+
             //Update best
             if(newScore>bestScore){
                 bestScore=newScore;
                 bestSolution.copy(newSolution);
                 System.out.println("Best updated: "+bestScore);
+                iteration=0;
             }
 
             t=t*coeff;
 
-            if(iteration%displayFreq==0){
+            if(displayIt%displayFreq==0){
                 System.out.println("Current Score: "+currentScore + "(Best="+bestScore+")"+"\t (T="+t+")");
              }
 
@@ -149,9 +159,12 @@ public class ProblemInstance {
                 stopCriterion=true;
 
             iteration++;
+            displayIt++;
 
         }
 
+        System.out.println("Best solution value = "+bestSolution.score);
+//        System.out.println("Best solution value = "+bestSolution.evaluate2());
         return bestSolution;
     }
 

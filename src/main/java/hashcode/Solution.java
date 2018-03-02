@@ -11,6 +11,9 @@ public class Solution {
     public Map<Integer, List<Ride>> assignment = new TreeMap<>();
     public Map<Ride, Integer> ridesToVehicles = new HashMap<>();
 
+    Map<Integer,Integer> vehicleScores = new HashMap<>();
+    double score = 0.0;
+
     ProblemInstance instance;
 
     public Solution(ProblemInstance instance){
@@ -37,6 +40,7 @@ public class Solution {
                 ridesToVehicles.put(ride, v);
             }
         }
+        evaluate();
     }
 
     public String toString(){
@@ -63,37 +67,62 @@ public class Solution {
         return Math.abs(startRow-endRow)+Math.abs(startColumn-endColumn);
     }
 
-    public double evaluate(){
-        double value=0.0;
+    public void evaluate(){
         for(Integer vehicle : assignment.keySet()){
             //For each vehicle
             int currentStep=0;
             int currentRow=0;
             int currentColumn=0;
-            for(Ride ride : assignment.get(vehicle)){
+            int vehicleScore=0;
+            for(int i=0;i<assignment.get(vehicle).size();i++){
+                Ride ride = assignment.get(vehicle).get(i);
                 if(currentStep<=instance.nbSteps){
-                    boolean bonusOrNot = currentStep+distance(currentRow,currentColumn,ride.startRow,ride.startColumn)<=ride.earliestStart;
-                    currentStep+=Math.max(ride.earliestStart,
-                            distance(currentRow,currentColumn,ride.startRow,ride.startColumn)) +
-                    ride.getLength();
+                    int distanceToRide = distance(currentRow,currentColumn,ride.startRow,ride.startColumn);
+                    int rideStartTime = Math.max(ride.earliestStart,currentStep+distanceToRide);
+                    int rideEndTime = rideStartTime+ride.getLength();
+                    if(rideEndTime<=Math.min(ride.latestEnd,instance.nbSteps)){
+                        vehicleScore+=ride.getLength();
+                        if(rideStartTime==ride.earliestStart)
+                            vehicleScore+=instance.bonus;
+                    }
+                    //Update all fields
+                    currentStep=rideStartTime+ride.getLength();
                     currentRow = ride.endRow;
                     currentColumn = ride.endColumn;
-                    if(currentStep<ride.latestEnd){
-                        value+=ride.getLength();
-                        if(bonusOrNot)
-                            value+=instance.bonus;
-                    }
                 }
             }
+            score+=vehicleScore;
+            vehicleScores.put(vehicle,vehicleScore);
+            //System.out.println("vehicle "+vehicle+ " --> "+vehicleScores.get(vehicle));
         }
-/*
-        if (value != evaluate2()) {
-            String msg = value + " != " + evaluate2();
-            System.err.println(msg);
-//            throw new IllegalStateException(msg);
+    }
+
+    public void evaluateVehicleOnly(int vehicle){
+        this.score-=vehicleScores.get(vehicle);
+        //For each vehicle
+        int currentStep=0;
+        int currentRow=0;
+        int currentColumn=0;
+        int score=0;
+        for(int i=0;i<assignment.get(vehicle).size();i++){
+            Ride ride = assignment.get(vehicle).get(i);
+            if(currentStep<=instance.nbSteps){
+                int distanceToRide = distance(currentRow,currentColumn,ride.startRow,ride.startColumn);
+                int rideStartTime = Math.max(ride.earliestStart,currentStep+distanceToRide);
+                int rideEndTime = rideStartTime+ride.getLength();
+                if(rideEndTime<=Math.min(ride.latestEnd,instance.nbSteps)){
+                    score+=ride.getLength();
+                    if(rideStartTime==ride.earliestStart)
+                        score+=instance.bonus;
+                }
+                //Update all fields
+                currentStep=rideStartTime+ride.getLength();
+                currentRow = ride.endRow;
+                currentColumn = ride.endColumn;
+            }
         }
-*/
-        return value;
+        vehicleScores.put(vehicle,score);
+        this.score+=score;
     }
 
     public double evaluate2() {
@@ -124,7 +153,9 @@ public class Solution {
                 this.assignment.get(vehicle).add(ride);
                 this.ridesToVehicles.put(ride,vehicle);
             }
+            this.vehicleScores.put(vehicle,other.vehicleScores.get(vehicle));
         }
+        this.score=other.score;
     }
 
     public void neighbour(Ride ride, int vehicle, int position){
@@ -134,6 +165,13 @@ public class Solution {
         //Assign it to the new one
         ridesToVehicles.put(ride,vehicle);
         //At the right position
+        assignment.get(vehicle).add(position,ride);
+    }
+
+    //Move a ride in a vehicle route
+    public void neighbour2(Ride ride, int position){
+        int vehicle = ridesToVehicles.get(ride);
+        assignment.get(vehicle).remove(ride);
         assignment.get(vehicle).add(position,ride);
     }
 
